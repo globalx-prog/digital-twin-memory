@@ -1,0 +1,48 @@
+# ==============================================================================
+# Standalone Digital Twin & 3-Ebenen-Gehirn (Konfiguration)
+# ==============================================================================
+project:
+  name: "obsidian-digital-twin"
+  vault_path: "./vault"
+  database_path: "./configs/twin_memory.db"
+
+# 3-Stufige Trennung der Gehirn-Ebenen (wie in Obsidian / Zettelkasten)
+brain_layers:
+  layer_1_fleeting:
+    folder: "01_fleeting_notes"
+    role: "Sensorisches & Kurzzeit-Gedächtnis (1:1 konvertierte PDFs, ODTs, Diktate)"
+    search_weight: 1.0
+    auto_ingest_target: true
+  layer_2_literature:
+    folder: "02_literature_notes"
+    role: "Arbeits- & Literatur-Gedächtnis (KI-kuratierte Exzerpte, Zusammenfassungen, Zitate)"
+    search_weight: 2.0
+    requires_source_link: true
+  layer_3_permanent:
+    folder: "03_permanent_brain"
+    role: "Langzeit-Gehirn / Digitaler Zwilling (Verifiziertes Wissen, Entscheidungen, MOCs)"
+    search_weight: 3.5
+    highest_priority: true
+
+# Dokumenten-Konverter Pipeline (00_inbox_raw -> 01_fleeting_notes)
+ingestion:
+  inbox_folder: "00_inbox_raw"
+  supported_formats:
+    - ".pdf"
+    - ".odt"
+    - ".docx"
+    - ".pptx"
+    - ".xlsx"
+    - ".csv"
+    - ".html"
+    - ".txt"
+    - ".md"
+  pdf_engine: "pymupdf4llm"     # Alternativen: docling, marker, pdftotext
+  office_engine: "markitdown"   # Nativ für DOCX/XLSX/PPTX + XML-Parser für ODT
+  deduplicate_sha256: true
+
+# Lokale KI-Anbindung (Standard-Ollama, unabhängig von llm-optimierungen nutzbar)
+local_ai:
+  ollama_url: "http://127.0.0.1:11434"
+  default_chat_model: "qwen3-coder:latest"
+  embedding_mode: "sqlite-fts5-bm25" # 0 MB VRAM! Optional erweiterbar um bge-m3 (CPU)

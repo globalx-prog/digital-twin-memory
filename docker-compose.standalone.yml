@@ -1,0 +1,21 @@
+# ==============================================================================
+# Standalone Docker-Compose (Alternative zu llm-optimierungen)
+# ==============================================================================
+# Betreibt das 3-stufige Dokumenten-Gehirn komplett eigenständig als OpenAPI/MCP
+# Service auf Port 9005 (für Open WebUI, Obsidian-Plugins oder Remote-Clients).
+# ==============================================================================
+name: digital-twin-standalone
+
+services:
+  twin-mcp-gateway:
+    image: ghcr.io/bumuellp/mcpo:latest
+    container_name: twin-mcp-gateway
+    restart: unless-stopped
+    command: ["--config", "/app/mcp-obsidian-twin.json", "--port", "9005", "--host", "0.0.0.0"]
+    ports:
+      - "127.0.0.1:9005:9005"
+    volumes:
+      - ./configs/mcp-obsidian-twin.json:/app/mcp-obsidian-twin.json:ro
+      - /home/clemi/Projekte/LLM/digital-twin-memory:/home/clemi/Projekte/LLM/digital-twin-memory:rw
+    security_opt:
+      - no-new-privileges:true

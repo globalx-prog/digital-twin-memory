@@ -1,0 +1,53 @@
+# ==============================================================================
+# .gitignore — Digital Twin & 3-Ebenen-Gehirn (Reines Code- & Architektur-Template)
+# ==============================================================================
+
+# 1. Python Virtual Environments & Bytecode
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 2. Lokale SQLite-Volltextdatenbanken (werden automatisch aus dem Vault generiert)
+configs/*.db
+configs/*.db-journal
+configs/*.db-wal
+configs/*.db-shm
+
+# 3. Persönliche Dokumente & Obsidian-Notizen (Reines Code-Template!)
+#    Nur die leere Ordnerstruktur (.gitkeep) und Vorlagen (99_templates/) werden versioniert.
+vault/00_inbox_raw/*
+!vault/00_inbox_raw/.gitkeep
+
+vault/01_fleeting_notes/*
+!vault/01_fleeting_notes/.gitkeep
+
+vault/02_literature_notes/*
+!vault/02_literature_notes/.gitkeep
+
+vault/03_permanent_brain/*
+!vault/03_permanent_brain/.gitkeep
+
+# 4. Lokale Obsidian-App-Einstellungen & Workspace-Cache
+vault/.obsidian/workspace.json
+vault/.obsidian/workspace-mobile.json
+vault/.obsidian/plugins/*/data.json
+
+# 5. Große Binärdateien, Modelle & Archive (Sicherheitsnetz für globale Git-Hooks)
+*.gguf
+*.safetensors
+*.bin
+*.pdf
+*.odt
+*.docx
+*.pptx
+*.xlsx
+*.zip
+*.tar.gz
+
+# 6. Umgebungsvariablen & temporäre Dateien
+.env
+.DS_Store
+*.swp
+*~

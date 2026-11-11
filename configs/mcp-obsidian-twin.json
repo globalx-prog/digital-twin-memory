@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "obsidian-twin": {
+      "command": "python3",
+      "args": [
+        "/home/clemi/Projekte/LLM/digital-twin-memory/scripts/mcp_obsidian_twin.py"
+      ]
+    }
+  }
+}
